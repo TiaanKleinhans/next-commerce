@@ -1,0 +1,58 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model ProductModel {
+  id    String @id @default(cuid())
+  isArchived Boolean @default(false)
+  dateCreated  DateTime @default(now())
+    
+  name  String
+  description String?
+  available Int @default(0)
+  category CategoryModel @relation(fields: [categoryId], references: [id])
+  categoryId String
+}
+
+model CategoryModel{
+  id    String @id @default(cuid())
+  isArchived Boolean @default(false)
+  dateCreated  DateTime @default(now())
+
+  name String
+  slug String @unique
+  products ProductModel[]
+}
+
+model LookupTypeModel {
+  id String @id @default(cuid())
+  isArchived Boolean @default(false)
+  dateCreated  DateTime @default(now())
+
+  name  String @unique
+  lookups LookupModel[]
+}
+
+model LookupModel {
+  id    String @id @default(cuid())
+  isArchived Boolean @default(false)
+  dateCreated  DateTime @default(now())
+  
+  value String
+  
+
+  lookupTypeId String
+  lookupType LookupTypeModel @relation(fields: [lookupTypeId], references: [id])
+}
+
