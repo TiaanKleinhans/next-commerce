@@ -23,6 +23,7 @@ model ProductModel {
   available Int @default(0)
   category CategoryModel @relation(fields: [categoryId], references: [id])
   categoryId String
+  sellingPrice Decimal @default(0)
 }
 
 model CategoryModel{
