@@ -7,6 +7,7 @@ export async function getProductsById(id: string) {
     where: { id },
     include: {
       category: true,
+      images: true,
     },
   });
 

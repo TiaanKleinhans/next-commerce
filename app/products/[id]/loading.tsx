@@ -1,10 +1,6 @@
-import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
-import { getProductsById } from '@/lib/actions/products-actions';
-import { formatPrice } from '@/lib/utils/format-price';
 import { Separator } from '@radix-ui/react-separator';
-import { notFound } from 'next/navigation';
 
 export default async function Loading() {
   return (

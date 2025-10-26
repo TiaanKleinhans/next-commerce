@@ -24,6 +24,8 @@ model ProductModel {
   category CategoryModel @relation(fields: [categoryId], references: [id])
   categoryId String
   sellingPrice Decimal @default(0)
+
+  images ImagesModel[]
 }
 
 model CategoryModel{
@@ -49,11 +51,20 @@ model LookupModel {
   id    String @id @default(cuid())
   isArchived Boolean @default(false)
   dateCreated  DateTime @default(now())
-  
   value String
-  
 
   lookupTypeId String
   lookupType LookupTypeModel @relation(fields: [lookupTypeId], references: [id])
+}
+
+model ImagesModel {
+id String @id @default(cuid())
+isArchived Boolean @default(false)
+dateCreated  DateTime @default(now())
+url String
+productId String
+product ProductModel @relation(fields: [productId], references: [id])
+isDefault Boolean @default(false)
+sortOrder Int? 
 }
 
