@@ -2,14 +2,15 @@ import Link from 'next/link';
 import { Button } from './ui/button';
 import { Search, ShoppingCart } from 'lucide-react';
 import { ThemeModeToggle } from './ui/theme-mode-toggle';
+import { MobileNavigation } from './mobile-navigation';
 
 export function NavBar() {
   return (
-    <div className="border-b">
+    <div className="border-b ">
       <div className="container mx-auto flex h-16 items-center justify-between ">
         {/* Navigation */}
         <div>
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-6 md:block">
             <Link className="text-2xl font-bold" href="/">
               Store
             </Link>
@@ -22,10 +23,11 @@ export function NavBar() {
                 Some Link
               </Link>
             </nav>
+            <MobileNavigation />
           </div>
         </div>
         {/* Login / Cart */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-0">
           <Button variant="ghost" size="icon" asChild>
             <Link href="/search">
               <Search className="h-5 w-5"></Search>
