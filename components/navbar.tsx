@@ -1,4 +1,7 @@
 import Link from 'next/link';
+import { Button } from './ui/button';
+import { Search, ShoppingCart } from 'lucide-react';
+import { ThemeModeToggle } from './ui/theme-mode-toggle';
 
 export function NavBar() {
   return (
@@ -22,7 +25,21 @@ export function NavBar() {
           </div>
         </div>
         {/* Login / Cart */}
-        <div>right</div>
+        <div className="flex items-center gap-4">
+          <Button variant="ghost" size="icon" asChild>
+            <Link href="/search">
+              <Search className="h-5 w-5"></Search>
+            </Link>
+          </Button>
+
+          <Button variant="ghost" size="icon" asChild>
+            <Link href="/cart">
+              <ShoppingCart className="h-5 w-5"></ShoppingCart>
+            </Link>
+          </Button>
+
+          <ThemeModeToggle />
+        </div>
       </div>
     </div>
   );
