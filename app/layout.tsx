@@ -4,6 +4,7 @@ import './globals.css';
 import Link from 'next/link';
 import { ThemeProvider } from '@/components/theme-provider';
 import { ThemeModeToggle } from '@/components/ui/theme-mode-toggle';
+import { NavBar } from '@/components/navbar';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -34,20 +35,12 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <ul>
-            <li>
-              <Link href="/">Home</Link>
-            </li>
-            <li>
-              <Link href="/products">Product</Link>
-            </li>
-            <li>
-              <ThemeModeToggle></ThemeModeToggle>
-            </li>
-          </ul>
-        </ThemeProvider>
+          <header>
+            <NavBar />
+          </header>
 
-        {children}
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
