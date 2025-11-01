@@ -40,6 +40,11 @@ export default function RootLayout({
           </header>
 
           {children}
+          <footer className="border-t py-6">
+            <div className="container mx-auto text-sm text-muted-foreground">
+              &copy; {new Date().getFullYear()} All rights reserved.
+            </div>
+          </footer>
         </ThemeProvider>
       </body>
     </html>
