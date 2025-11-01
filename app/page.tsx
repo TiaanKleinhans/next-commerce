@@ -31,8 +31,6 @@ async function Products({ page }: { page: number }) {
 
   return (
     <>
-      <p>Showing {products.length} Products</p>
-
       <div className="grid grid-cols-1 gap-4 md:grid-cols2 lg: grid-cols-3">
         {products.map((product) => (
           <ProductCard key={product.id} product={product} />
@@ -51,7 +49,7 @@ export default async function HomePage(props: { searchParams: SearchParams }) {
   const page = Number(searchParams.page) || 1;
 
   return (
-    <main className="container mx-auto p-4">
+    <main className="container mx-auto py-4">
       <h1 className="text-3xl font-bold mb-6">Home</h1>
       <Suspense key={page} fallback={<ProductsSkeleton />}>
         <Products page={page} />
