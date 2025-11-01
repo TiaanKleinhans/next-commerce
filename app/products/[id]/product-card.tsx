@@ -1,14 +1,17 @@
+import Breadcrumbs from '@/components/breadcrumbs/breadcrumbs';
 import { Badge } from '@/components/ui/badge';
+import { Breadcrumb } from '@/components/ui/breadcrumb';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { getProductsById } from '@/lib/actions/products-actions';
 import { formatPrice } from '@/lib/utils/format-price';
+import { Label } from '@radix-ui/react-dropdown-menu';
 import { Separator } from '@radix-ui/react-separator';
 import { ShoppingCart } from 'lucide-react';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 
-export default async function ProductPage({ params }: { params: Promise<{ id: string }> }) {
+export default async function ProductCard({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const product = await getProductsById(id);
 
@@ -18,9 +21,17 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
     notFound();
   }
 
+  const breadcrumbs = [
+    { label: 'temp-home', href: '/' },
+    { label: 'temp', href: '/products' },
+    { label: product.name, href: `/products/${product.id}`, active: true },
+  ];
+
   return (
-    <main className="container mx-auto p-4">
-      <Card className="max-w-3xl mx-auto">
+    <main className="container mx-auto py-4">
+      <Breadcrumbs items={breadcrumbs} />
+
+      <Card>
         <CardContent className="p-6 gid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="relative rounded-lg overflow-hidden h-[200px] md:h-[300px] md:h-[300px]">
             {product.images.length != 0 && (

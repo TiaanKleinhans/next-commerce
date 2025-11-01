@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/pagination';
 import { Suspense } from 'react';
 import ProductsSkeleton from './products-skeleton';
+import Breadcrumbs from '@/components/breadcrumbs/breadcrumbs';
 
 type SearchParams = Promise<{
   [key: string]: string | string[] | undefined;
@@ -49,8 +50,8 @@ export default async function HomePage(props: { searchParams: SearchParams }) {
   const page = Number(searchParams.page) || 1;
 
   return (
-    <main className="container mx-auto py-4">
-      <h1 className="text-3xl font-bold mb-6">Home</h1>
+    <main className="container mx-auto p-4">
+      <Breadcrumbs items={[{ label: 'Home', href: '/' }]} />
       <Suspense key={page} fallback={<ProductsSkeleton />}>
         <Products page={page} />
       </Suspense>
