@@ -6,7 +6,7 @@ import Link from 'next/link';
 export function ProductCard({ product }: { product: ProductModel }) {
   return (
     <Link href={`/products/${product.id}`}>
-      <Card className="pt-0 overflow-hide">
+      <Card className="pt-0 overflow-hide min-h-[400px]">
         <div className="relative aspect-video">
           {/* <Image
     className="obect-cover" 

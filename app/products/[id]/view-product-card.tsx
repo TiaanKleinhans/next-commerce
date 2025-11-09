@@ -5,13 +5,12 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { getProductsById } from '@/lib/actions/products-actions';
 import { formatPrice } from '@/lib/utils/format-price';
-import { Label } from '@radix-ui/react-dropdown-menu';
 import { Separator } from '@radix-ui/react-separator';
 import { ShoppingCart } from 'lucide-react';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 
-export default async function ProductCard({ params }: { params: Promise<{ id: string }> }) {
+export default async function ViewProductCard({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const product = await getProductsById(id);
 
@@ -22,6 +21,7 @@ export default async function ProductCard({ params }: { params: Promise<{ id: st
   }
 
   const breadcrumbs = [
+    //TODO - Rework These breakcrumbs
     { label: 'temp-home', href: '/' },
     { label: 'temp', href: '/products' },
     { label: product.name, href: `/products/${product.id}`, active: true },
