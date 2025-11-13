@@ -6,18 +6,28 @@ import { Suspense } from 'react';
 import { ProductCardSkeleton } from '../../product-card-skeleton';
 import { notFound } from 'next/navigation';
 import { promises } from 'dns';
+import { SortOrderConstants } from '@/lib/constants/sort-order-constants';
+import { OrderByDictionary } from '@/lib/constants/dictionary/order-by-dictionary';
+import { defaultOrderConstant } from '@/prisma/seeds/lookups/lookup-seeds/order-by-lookup-seed';
+import Link from 'next/link';
 
 type CategoryProps = {
   params: Promise<{ id: string }>;
   searchParams: Promise<{ orderBy?: string }>;
 };
 
-async function Products({ categoryId: orderBy }: { categoryId: string; orderBy?: string }) {
-  let orderBy: Record<string>;
+async function Products({ categoryId, orderBy }: { categoryId: string; orderBy?: string }) {
+  let sortOrder:
+    | Record<string, typeof SortOrderConstants.ascending | typeof SortOrderConstants.descending>
+    | undefined = undefined;
+
+  const currentOrder = OrderByDictionary[orderBy ?? defaultOrderConstant.id];
+
   const products = await prisma.productModel.findMany({
     where: {
       categoryId: categoryId,
     },
+    orderBy: currentOrder,
     take: 10,
   });
 
@@ -36,8 +46,9 @@ async function Products({ categoryId: orderBy }: { categoryId: string; orderBy?:
   );
 }
 
-export default async function CategoryPage({ params }: CategoryProps) {
+export default async function CategoryPage({ params, searchParams }: CategoryProps) {
   const { id } = await params;
+  const { orderBy } = await searchParams;
 
   const category = await prisma.categoryModel.findUnique({
     where: {
@@ -61,8 +72,15 @@ export default async function CategoryPage({ params }: CategoryProps) {
   return (
     <main className="container mx-auto py-4">
       <Breadcrumbs items={breadCrumbs} />
-      <Suspense key={id} fallback={<ProductCardSkeleton />}>
-        <Products categoryId="{id}" />
+
+      <div className="flex gap-3 text-sm">
+        {/* REVIEW This Breadcrumbs will have to be modified to show  current order bu / sort */}
+        <Link href={`/search/${id}`}>Default</Link>
+        {/* <Link href={`/search/${id}?sort=price-asc`}>Price : Low To High</Link> */}
+      </div>
+
+      <Suspense key={`${id}-${orderBy}`} fallback={<ProductCardSkeleton />}>
+        <Products categoryId="{id}" orderBy={orderBy} />
       </Suspense>
     </main>
   );
